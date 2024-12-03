@@ -1,0 +1,19 @@
+.formContainer{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    border: 1px black solid;
+}
+
+form{
+    display: grid;
+}
+
+input {
+    display: block;
+    margin-bottom: 10px; 
+    border: 1px black solid;
+    padding: 5px;
+  }
+
+

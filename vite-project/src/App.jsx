@@ -5,6 +5,13 @@ import SignInPage from "./Pages/SignFile/SignInPage";
 import SignUp from "./Pages/SignFile/SignUp";
 import Reset from "./Pages/SignFile/Reset";
 
+// Import pages
+import Home from './Pages/HomeFile/Home';
+import Search from './Pages/Search/Search';
+import Message from './Pages/Message/Message';
+import Profile from './Pages/Profile/Profile';
+import Create from './Pages/Create/Create';
+
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +20,12 @@ function App() {
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/reset" element={<Reset />} />
+
+        <Route path="/home" element={<Home />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/message" element={<Message />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/create" element={<Create />} />
       </Routes>
     </BrowserRouter>
   );
