@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/SignInPage.css";
+import "./SignInPage.css";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");

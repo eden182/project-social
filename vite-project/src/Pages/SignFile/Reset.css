@@ -17,7 +17,7 @@ header {
 .instagramIcon {
   height: 100px;
   width: auto;
-  background-image: url("../styles/images/instagram-name-logo.png");
+  background-image: url("../images/instagram-name-logo.png");
   background-position: left;
   background-size: cover;
 }

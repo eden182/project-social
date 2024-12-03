@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import SignInPage from "./Components/SignInPage";
-// import Home from "./Components/Home";
-import SignUp from "./Components/SignUp";
-import Reset from "./Components/Reset";
+import SignInPage from "./Pages/SignFile/SignInPage";
+import SignUp from "./Pages/SignFile/SignUp";
+import Reset from "./Pages/SignFile/Reset";
 
 function App() {
   return (
@@ -21,4 +20,4 @@ function App() {
 
 export default App;
 
-//         <Route path="/home" element={<Home />} />
+//

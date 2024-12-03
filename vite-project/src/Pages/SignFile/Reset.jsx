@@ -1,4 +1,4 @@
-import "./styles/Reset.css";
+import "./Reset.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 

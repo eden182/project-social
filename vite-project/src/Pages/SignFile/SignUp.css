@@ -10,7 +10,7 @@ html {
   height: 75px;
   margin: 40px;
   overflow: visible;
-  background-image: url("./images/instagram-name-logo.png");
+  background-image: url("../images/instagram-name-logo.png");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -113,7 +113,7 @@ html {
 }
 
 .facebookIcon2 {
-  background-image: url("./images/facebook-logo-2-noback.png");
+  background-image: url("../images/facebook-logo-2-noback.png");
   background-size: cover;
   background-position: center;
   width: 22px;

@@ -12,7 +12,7 @@ html {
   height: 75px;
   margin: 40px;
   overflow: visible;
-  background-image: url("./images/instagram-name-logo.png");
+  background-image: url("../images/instagram-name-logo.png");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -104,7 +104,7 @@ html {
 .left {
   width: 550px;
   background-color: transparent;
-  background-image: url("./images/logPage-screenshot-background-2x.png");
+  background-image: url("../images/logPage-screenshot-background-2x.png");
   background-position: center;
   background-size: cover;
   z-index: 1;
@@ -116,7 +116,7 @@ html {
 .backgroundImage {
   width: 270px;
   height: 84.5%;
-  background-image: url("./images/logPage-screenshot1-2x.png");
+  background-image: url("../images/logPage-screenshot1-2x.png");
   background-position: center;
   background-size: cover;
   z-index: 10;
@@ -128,19 +128,19 @@ html {
 
 @keyframes backgroundRotation {
   0% {
-    background-image: url("./images/logPage-screenshot1-2x.png");
+    background-image: url("../images/logPage-screenshot1-2x.png");
   }
   25% {
-    background-image: url("./images/logPage-screenshot2-2x.png");
+    background-image: url("../images/logPage-screenshot2-2x.png");
   }
   50% {
-    background-image: url("./images/logPage-screenshot3-2x.png");
+    background-image: url("../images/logPage-screenshot3-2x.png");
   }
   75% {
-    background-image: url("./images/logPage-screenshot4-2x.png");
+    background-image: url("../images/logPage-screenshot4-2x.png");
   }
   100% {
-    background-image: url("./images/logPage-screenshot1-2x.png");
+    background-image: url("../images/logPage-screenshot1-2x.png");
   }
 }
 
@@ -158,7 +158,7 @@ html {
 }
 
 .facebookIcon {
-  background-image: url("./images/facebook-logo.png");
+  background-image: url("../images/facebook-logo.png");
   background-size: cover;
   background-position: center;
   width: 22px;
@@ -191,7 +191,7 @@ html {
 }
 
 .googlePlay {
-  background-image: url("./images/googlePlay-logo.png");
+  background-image: url("../images/googlePlay-logo.png");
   background-position: center;
   background-size: cover;
   width: 130px;
@@ -202,7 +202,7 @@ html {
   cursor: pointer;
 }
 .microsoft {
-  background-image: url("./images/microsoft-logo.png");
+  background-image: url("../images/microsoft-logo.png");
   background-position: center;
   background-size: cover;
   width: 105px;
