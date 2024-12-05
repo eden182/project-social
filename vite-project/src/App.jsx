@@ -4,13 +4,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SignInPage from "./Pages/SignFile/SignInPage";
 import SignUp from "./Pages/SignFile/SignUp";
 import Reset from "./Pages/SignFile/Reset";
-
-// Import pages
-import Home from './Pages/HomeFile/Home';
-import Search from './Pages/Search/Search';
-import Message from './Pages/Message/Message';
-import Profile from './Pages/Profile/Profile';
-import Create from './Pages/Create/Create';
+import Home from "./Pages/HomeFile/Home";
+import Search from "./Pages/Search/Search";
+import Message from "./Pages/Message/Message";
+import Profile from "./Pages/Profile/Profile";
+import Create from "./Pages/Create/Create";
 
 function App() {
   return (
@@ -20,7 +18,6 @@ function App() {
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/reset" element={<Reset />} />
-
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/message" element={<Message />} />
