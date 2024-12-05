@@ -1,8 +1,13 @@
-.formContainer{
+.middleSideCreate{
+    height: 400px;
     display: grid;
-    align-items: center;
+    align-content: center;
     justify-items: center;
-    border: 1px black solid;
+    border: 1px solid black;
+}
+
+.ss{
+    display: block;
 }
 
 form{
