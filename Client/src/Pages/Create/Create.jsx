@@ -1,35 +1,31 @@
 import React, { useState, useRef } from 'react';
 import LeftSide from '../../Pages/HomeFile/leftSide';
-import '../Create/Create.css'
+import '../Create/Create.css';
 
 const Create = () => {
-
   const inputRef = useRef(null);
   const inputRef2 = useRef(null);
-
   const [image, setImage] = useState(""); // שמירת התמונה
 
   const handleImageClick = () => {
     if (inputRef.current) {
       inputRef.current.click(); // פתיחת דיאלוג בחירת קובץ
     }
-  }
+  };
 
   const handleImageChange = (event) => {
+    event.preventDefault(); // מנע את ההתנהגות ברירת המחדל של submit אם אתה לא רוצה רענון
     const file = event.target.files[0]; 
     console.log(file);
     setImage(file); // עדכון המידע של התמונה
-  }
+  };
 
-  const inputValue = () => {
-    // הצגת המידע על התמונה וה-input
+  const inputValue = (event) => {
+    event.preventDefault(); 
     console.log("Image Info:", image);
     console.log("Description:", inputRef2.current.value);
-  }
-
-  function buttonClicked () {
-    alert("Uploaded successfully")
-  }
+    alert("Uploaded successfully");
+  };
 
 
   return (
@@ -65,7 +61,7 @@ const Create = () => {
             <div className='ss'>
               <input ref={inputRef2} type='text' placeholder='Description' />
             </div>
-            <button onClick={buttonClicked}>Upload</button> 
+            <button type='submit'>Upload</button> 
           </form>
         </div>
 
