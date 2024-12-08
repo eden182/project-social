@@ -4,6 +4,7 @@ import "./SignInPage.css";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
+  const [btnText, setBtnText] = useState("Log In"); // Add state for button text
   const pswdRef = useRef();
   const navigate = useNavigate();
 
@@ -27,18 +28,16 @@ const SignInPage = () => {
 
     console.log(email);
     console.log(pswdRef.current.value);
-    setBtnText("Loading...");
+    setBtnText("Loading..."); // Change button text to "Loading..."
     setTimeout(() => {
-      alert("Succefuly");
-      setEmail("");
-      pswdRef.current.value = "";
-      setBtnText("Submit");
+      alert("Successfully");
+      setEmail(""); // Clear email field
+      pswdRef.current.value = ""; // Clear password field
+      setBtnText("Submit"); // Change button text back to "Submit"
       setTimeout(() => {
         navigate("/home");
-      }),
-        1000;
-    }),
-      3000;
+      }, 1000);
+    }, 3000);
   };
 
   return (
@@ -68,7 +67,7 @@ const SignInPage = () => {
                 name="password"
                 placeholder="Password"
               />
-              <button type="submit">Log In</button>
+              <button type="submit">{btnText}</button> {/* Use btnText here */}
               <div className="lineCon">
                 <span className="line"></span>
                 <span className="p" id="or">
@@ -110,11 +109,6 @@ const SignInPage = () => {
           </div>
         </div>
       </div>
-      {/* <footer>
-        Meta About Blog Jobs Help API Privacy Terms Locations Instagram Lite
-        Threads Contact Uploading & Non-Users Meta Verified Settlement
-        Agreements English English © 2024 Instagram from Meta
-      </footer> */}
     </>
   );
 };
