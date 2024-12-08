@@ -41,6 +41,8 @@ const SignInPage = () => {
 
     Cookies.set("user", JSON.stringify(userData), { expires: 7 });
 
+    console.log("Logged in user data:", userData);
+
     setTimeout(() => {
       alert("Successfully logged in");
       setEmail("");
