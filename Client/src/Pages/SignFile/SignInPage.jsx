@@ -1,10 +1,13 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import "./SignInPage.css";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
-  const [btnText, setBtnText] = useState("Log In"); // Add state for button text
+  const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
+  const [btnText, setBtnText] = useState("Log In");
   const pswdRef = useRef();
   const navigate = useNavigate();
 
@@ -28,15 +31,24 @@ const SignInPage = () => {
 
     console.log(email);
     console.log(pswdRef.current.value);
-    setBtnText("Loading..."); // Change button text to "Loading..."
+
+    const userData = {
+      name: name,
+      userName: userName,
+      email: email,
+      password: pswdRef.current.value,
+    };
+
+    Cookies.set("user", JSON.stringify(userData), { expires: 7 });
+
     setTimeout(() => {
-      alert("Successfully");
-      setEmail(""); // Clear email field
-      pswdRef.current.value = ""; // Clear password field
-      setBtnText("Submit"); // Change button text back to "Submit"
-      setTimeout(() => {
-        navigate("/home");
-      }, 1000);
+      alert("Successfully logged in");
+      setEmail("");
+      setUserName("");
+      setName("");
+      pswdRef.current.value = "";
+
+      navigate("/home");
     }, 3000);
   };
 
