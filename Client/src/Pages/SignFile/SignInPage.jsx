@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import axios from "axios";
 import "./SignInPage.css";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
-  const [name, setName] = useState("");
   const [btnText, setBtnText] = useState("Log In");
+  const [errorMessage, setErrorMessage] = useState("");
   const pswdRef = useRef();
   const navigate = useNavigate();
 
@@ -26,32 +27,36 @@ const SignInPage = () => {
       "https://apps.microsoft.com/detail/9nblggh5l9xt?hl=en-US&gl=US";
   }
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(email);
-    console.log(pswdRef.current.value);
+    setBtnText("Loading...");
+    setErrorMessage("");
 
     const userData = {
-      name: name,
-      userName: userName,
-      email: email,
+      username: userName,
       password: pswdRef.current.value,
     };
 
-    Cookies.set("user", JSON.stringify(userData), { expires: 7 });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/users/login",
+        userData
+      );
 
-    console.log("Logged in user data:", userData);
+      console.log("Login Response:", response);
 
-    setTimeout(() => {
-      alert("Successfully logged in");
-      setEmail("");
-      setUserName("");
-      setName("");
-      pswdRef.current.value = "";
+      // Save user data to cookies or state
+      Cookies.set("user", JSON.stringify(response.data.user), { expires: 7 });
 
       navigate("/home");
-    }, 3000);
+    } catch (err) {
+      setErrorMessage(
+        err.response?.data?.error || "Something went wrong. Try again."
+      );
+      console.error("Login Error:", err);
+    } finally {
+      setBtnText("Log In");
+    }
   };
 
   return (
@@ -64,13 +69,13 @@ const SignInPage = () => {
           <div className="topRight">
             <div className="hlLogo"></div>
             <form onSubmit={handleFormSubmit}>
-              <label htmlFor="email"></label>
+              <label htmlFor="userName"></label>
               <input
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUserName(e.target.value)}
                 type="text"
-                id="email"
-                name="email"
-                placeholder="Phone Number, username or email"
+                id="userName"
+                name="userName"
+                placeholder="username"
               />
               {/* Password */}
               <label htmlFor="password"> </label>
@@ -82,6 +87,9 @@ const SignInPage = () => {
                 placeholder="Password"
               />
               <button type="submit">{btnText}</button> {/* Use btnText here */}
+              {errorMessage && (
+                <div className="errorMessage">{errorMessage}</div>
+              )}
               <div className="lineCon">
                 <span className="line"></span>
                 <span className="p" id="or">

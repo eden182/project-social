@@ -59,6 +59,7 @@ html {
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
+  width: 150px;
 }
 
 .lineCon {
