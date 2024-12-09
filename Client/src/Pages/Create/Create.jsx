@@ -39,14 +39,14 @@ const Create = () => {
         <form onSubmit={inputValue}> 
             {image ? (
               <img
-                style={{ width: "500px", height: "600px" }}
+                style={{ height: "300px",}}
                 onClick={handleImageClick}
                 src={URL.createObjectURL(image)}
                 alt=''
               />
             ) : (
               <img
-                style={{ width: "600px", height: "600px" }}
+                style={{  height: "300px", border: "1px solid" }}
                 onClick={handleImageClick}
                 src="/GoogleDocs.png"
                 alt=''
@@ -58,10 +58,11 @@ const Create = () => {
               onChange={handleImageChange}
               style={{ display: "none" }}
             />
+            <h3>Upload Here</h3>
             <div className='ss'>
-              <input ref={inputRef2} type='text' placeholder='Description' />
+              <input className='input-create' ref={inputRef2} type='text' placeholder='Description' />
             </div>
-            <button type='submit'>Upload</button> 
+            <button className='button-create' type='submit'>Upload</button> 
           </form>
         </div>
 

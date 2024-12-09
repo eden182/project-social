@@ -1,5 +1,5 @@
 .middleSideCreate{
-    height: 100%;
+    height: 100vh;
     display: grid;
     align-content: center;
     justify-items: center;
@@ -13,9 +13,10 @@
 
 form{
     display: grid;
+    justify-items: center;
 }
 
-input {
+.input-create {
     display: block;
     margin-bottom: 10px; 
     border: 1px rgb(154, 154, 154) solid;
@@ -23,7 +24,7 @@ input {
     border-radius: 25px;
 }
 
-button{
+.button-create{
     padding: 15px;
     border-radius: 25px;
     background-color: rgb(32, 250, 29);
@@ -34,7 +35,7 @@ button{
 }
 
 
-button:hover{
+.button-create:hover{
     background-color: rgb(27, 195, 24);
     cursor: pointer;
 }

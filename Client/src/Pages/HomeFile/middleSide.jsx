@@ -1,7 +1,7 @@
 import React from "react";
 import './middleSide.css'
 import story from '../../../story.json'
-import instagramLogo from "../images/Instagram 2015 Years.jpg"
+import instagramLogo from "../images/newInstagram.png"
 import Post from "../Post/post";
 
 const MiddleSide = () => {

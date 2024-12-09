@@ -21,7 +21,7 @@ const RightSide = () => {
             <div className="bottomRightSide">
                 <div className="suggestedBlock">
                     <div className="suggestedForYou">Suggested For You</div>
-                    <div className="seeAll">See All</div>
+                    <div className="seeAll" style={{cursor:"pointer"}}>See All</div>
                 </div>
                 <div className="followBlockRightSide">
                     <div className="topProfileRightBottomProfile">

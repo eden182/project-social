@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LeftSide from '../HomeFile/leftSide'; // LeftSide
+import './search.css'
+
+import SearchBar from './SearchBar';
+import SearchResultsList from './SearchResultsList';
 
 const Search = () => {
+  const [results, setResults] = useState([]);
   return (
     <div className="App">
       {/* LeftSide מוצג תמיד */}
@@ -9,12 +14,17 @@ const Search = () => {
         <LeftSide />
       </div>
 
-      {/* MiddleSide - כאן יציג את התוכן של הדף */}
       <div className="middleSide">
-        <p>Search page content</p> {/* כאן יציג את התוכן של הדף Search */}
+         <div className='App2'>
+          <div className='search-bar-container'>
+            <SearchBar setResults={setResults}/>
+            <SearchResultsList results={results}/>
+          </div>
+
+          </div>
       </div>
 
-      {/* אין הצגה של RightSide */}
+    
     </div>
   );
 };

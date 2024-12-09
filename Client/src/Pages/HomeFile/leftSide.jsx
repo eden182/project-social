@@ -6,7 +6,7 @@ import {Link} from "react-router-dom"
 
 // icons
 import profile from '../images/profile.jpg'
-import instagramLogo from '../images/Instagram 2015 Years.jpg';
+import instagramLogo from '../images/newInstagram.png';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';import MusicVideoIcon from '@mui/icons-material/MusicVideo';
