@@ -1,9 +1,13 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import "./SignInPage.css";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
+  const [btnText, setBtnText] = useState("Log In");
   const pswdRef = useRef();
   const navigate = useNavigate();
 
@@ -27,18 +31,27 @@ const SignInPage = () => {
 
     console.log(email);
     console.log(pswdRef.current.value);
-    setBtnText("Loading...");
+
+    const userData = {
+      name: name,
+      userName: userName,
+      email: email,
+      password: pswdRef.current.value,
+    };
+
+    Cookies.set("user", JSON.stringify(userData), { expires: 7 });
+
+    console.log("Logged in user data:", userData);
+
     setTimeout(() => {
-      alert("Succefuly");
+      alert("Successfully logged in");
       setEmail("");
+      setUserName("");
+      setName("");
       pswdRef.current.value = "";
-      setBtnText("Submit");
-      setTimeout(() => {
-        navigate("/home");
-      }),
-        1000;
-    }),
-      3000;
+
+      navigate("/home");
+    }, 3000);
   };
 
   return (
@@ -68,7 +81,7 @@ const SignInPage = () => {
                 name="password"
                 placeholder="Password"
               />
-              <button type="submit">Log In</button>
+              <button type="submit">{btnText}</button> {/* Use btnText here */}
               <div className="lineCon">
                 <span className="line"></span>
                 <span className="p" id="or">
@@ -110,11 +123,6 @@ const SignInPage = () => {
           </div>
         </div>
       </div>
-      {/* <footer>
-        Meta About Blog Jobs Help API Privacy Terms Locations Instagram Lite
-        Threads Contact Uploading & Non-Users Meta Verified Settlement
-        Agreements English English © 2024 Instagram from Meta
-      </footer> */}
     </>
   );
 };

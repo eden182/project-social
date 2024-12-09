@@ -30,80 +30,108 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-const signupUser = async (req, res) => {
+const signUp = async (req, res) => {
   try {
-    const { name, email, username, password } = req.body;
-    const user = await User.findOne({ $or: [{ email }, { username }] });
+    console.log(req.body); // Log the request data to ensure everything is correct
 
-    if (user) {
-      return res.status(400).json({ error: "User already exists" });
+    const { name, email, username, password } = req.body;
+
+    // Validation logic
+    if (!name || !email || !username || !password) {
+      return res.status(400).json({ error: "All fields are required!" });
     }
+
+    // Check for existing user
+    const existingUser = await User.findOne({
+      or: [{ email }, { username }],
+    });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "Email or username already exists." });
+    }
+
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({
+    const newUser = await new User({
       name,
       email,
       username,
       password: hashedPassword,
     });
+
     await newUser.save();
 
-    if (newUser) {
-      TokenAndCookie(newUser._id, res);
+    TokenAndCookie(newUser._id, res);
 
-      res.status(201).json({
+    res.status(201).json({
+      message: "User registered successfully!",
+      user: {
         _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
         username: newUser.username,
-        bio: newUser.bio,
-        profilePic: newUser.profilePic,
-      });
-    } else {
-      res.status(400).json({ error: "Invalid user data" });
-    }
+      },
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
-    console.log("Error in signupUser: ", err.message);
+    console.error("Error in signupUser:", err.message);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
 const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    // Validate required fields
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ error: "Both username and password are required." });
+    }
+
+    // Find the user by username
     const user = await User.findOne({ username });
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user?.password || ""
-    );
+    if (!user) {
+      return res.status(400).json({ error: "Invalid username or password." });
+    }
 
-    if (!user || !isPasswordCorrect)
-      return res.status(400).json({ error: "Invalid username or password" });
+    // Compare passwords
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ error: "Invalid username or password." });
+    }
 
+    // Generate token and set cookie
     TokenAndCookie(user._id, res);
 
+    // Send user details (excluding sensitive info)
     res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      bio: user.bio,
-      profilePic: user.profilePic,
+      message: "Login successful!",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        bio: user.bio || "",
+        profilePic: user.profilePic || "",
+      },
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    console.log("Error in loginUser: ", error.message);
+    console.error("Error in loginUser: ", error.message);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
 const logoutUser = (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 1 });
-    res.status(200).json({ message: "User logged out successfully" });
+    res.cookie("jwt", "", { maxAge: 1 }); // Clear the JWT cookie
+    res.status(200).json({ message: "User logged out successfully!" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
-    console.log("Error in signupUser: ", err.message);
+    console.error("Error in logoutUser: ", err.message);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
@@ -142,16 +170,19 @@ const updateUser = async (req, res) => {
   const { name, email, username, password, bio } = req.body;
   let { profilePic } = req.body;
 
-  const userId = req.user._id;
   try {
+    const userId = req.user._id;
     let user = await User.findById(userId);
-    if (!user) return res.status(400).json({ error: "User not found" });
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (req.params.id !== userId.toString())
+    // Check if the user is authorized to update
+    if (req.params.id !== userId.toString()) {
       return res
-        .status(400)
-        .json({ error: "You cannot update other user's profile" });
+        .status(403)
+        .json({ error: "You can only update your profile." });
+    }
 
+    // Update fields
     if (password) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -159,14 +190,15 @@ const updateUser = async (req, res) => {
     }
 
     if (profilePic) {
+      // Delete old profilePic from Cloudinary
       if (user.profilePic) {
-        await cloudinary.uploader.destroy(
-          user.profilePic.split("/").pop().split(".")[0]
-        );
+        const publicId = user.profilePic.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(publicId);
       }
 
-      const uploadedResponse = await cloudinary.uploader.upload(profilePic);
-      profilePic = uploadedResponse.secure_url;
+      // Upload new profilePic
+      const uploadResponse = await cloudinary.uploader.upload(profilePic);
+      profilePic = uploadResponse.secure_url;
     }
 
     user.name = name || user.name;
@@ -175,25 +207,21 @@ const updateUser = async (req, res) => {
     user.profilePic = profilePic || user.profilePic;
     user.bio = bio || user.bio;
 
-    user = await user.save();
-
-    await Post.updateMany(
-      { "replies.userId": userId },
-      {
-        $set: {
-          "replies.$[reply].username": user.username,
-          "replies.$[reply].userProfilePic": user.profilePic,
-        },
+    await user.save();
+    res.status(200).json({
+      message: "Profile updated successfully!",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        username: user.username,
+        profilePic: user.profilePic,
+        bio: user.bio,
       },
-      { arrayFilters: [{ "reply.userId": userId }] }
-    );
-
-    user.password = null;
-
-    res.status(200).json(user);
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
-    console.log("Error in updateUser: ", err.message);
+    console.error("Error in updateUser: ", err.message);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
@@ -227,7 +255,7 @@ const getSuggestedUsers = async (req, res) => {
 };
 
 export {
-  signupUser,
+  signUp,
   loginUser,
   logoutUser,
   followUnFollowUser,

@@ -4,7 +4,7 @@ import {
   getUserProfile,
   loginUser,
   logoutUser,
-  signupUser,
+  signUp,
   updateUser,
   getSuggestedUsers,
 } from "../Controllers/UserController.js";
@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/profile/:query", getUserProfile);
 router.get("/suggested", protectRoute, getSuggestedUsers);
-router.post("/signup", signupUser);
+router.post("/sign-up", signUp);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 router.post("/follow/:id", protectRoute, followUnFollowUser);
